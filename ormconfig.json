@@ -1,0 +1,4 @@
+{
+    "type": "mariadb",
+    "entities": ["dist/**/*Entity{.ts,.js}"]
+}

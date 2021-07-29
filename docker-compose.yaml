@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    container_name: api-prod-user 
+    volumes: 
+      - ./:/var/www/html/
+    working_dir: /var/www/html/
+    image: api-prod-user:1.0.0
+  mysql:
+    image: mysql:5.7
+    volumes: 
+      - mysql-volume:/var/lib/mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: db-test
+    container_name: mysql-prod-user
+volumes: 
+  mysql-volume:
