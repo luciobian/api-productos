@@ -1,4 +1,4 @@
-import { envFilePathConfiguration } from '../../src/config/env.config';
+import { envFilePathConfiguration } from '../../../src/config/env.config';
 
 describe('Configurations test suite', () => {
     test('environment file name when NODE_ENV is local return .env.local', () => {

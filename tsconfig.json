@@ -24,6 +24,8 @@
   "exclude": [
       "./plugins/**/*",
       "./typings/**/*",
-      "./built/**/*" // This is what fixed it!
+      "./built/**/*",
+      "node_modules", 
+      "public"
   ]
 }

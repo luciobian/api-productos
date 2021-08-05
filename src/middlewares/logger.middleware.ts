@@ -28,9 +28,9 @@ export class LoggingInterceptor<T> implements NestInterceptor<T, Response<T>> {
     const { originalUrl, headers, body } = req;
 
     Logger.log(
-      `URL: ${originalUrl} | body: ${JSON.stringify(
+      `EP: ${originalUrl} | BODY: ${JSON.stringify(
         body
-      )} | headers: ${JSON.stringify(headers)}`
+      )} | HEADERS: ${JSON.stringify(headers)}`
     );
 
     return next.handle().pipe(
