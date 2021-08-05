@@ -15,7 +15,7 @@ services:
       - mysql-volume:/var/lib/mysql
     environment: 
       MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: db-test
+      MYSQL_DATABASE: db_test
     container_name: mysql-prod-user
 volumes: 
   mysql-volume:
