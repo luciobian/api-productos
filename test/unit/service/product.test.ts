@@ -1,8 +1,13 @@
 import ProductService from '../../../dist/src/services/product.service';
 import { Product } from '../../../src/models/entities/product.entity';
+import { QueryFilterRequest } from '../../../src/models/requests/product-controller/query-filter.request';
 describe('product service suite', () => {
     const productDaoMock = {
-        createProduct: jest.fn()
+        createProduct: jest.fn(),
+        getAllProducts: jest.fn(),
+        getProductsFilterByName: jest.fn(),
+        getProductsFilterByDescription: jest.fn(),
+        getProductsFilterByNameOrDescription: jest.fn()
     };
     let productService: ProductService;
 
@@ -37,4 +42,38 @@ describe('product service suite', () => {
         expect(response).not.toBeNaN();
         expect(response).toBe(1);
     })
+
+    test('if product.dao.getAllProducts return empty array should return empty array of products', async () => {
+        productDaoMock.getAllProducts.mockReturnValueOnce([]);
+        const response = await productService.getAllProducts(1);
+        expect(response.products.length).toBe(0);
+    });
+
+    test('if product.dao.getByNameProducts return empty array should return empty array of products', async () => {
+        productDaoMock.getProductsFilterByName.mockReturnValueOnce([]);
+        const filter = {
+            name: 'test'
+        } as QueryFilterRequest;
+        const response = await productService.getProductsFilterByName(filter);
+        expect(response.products.length).toBe(0);
+    });
+
+    test('if product.dao.getAllProducts return empty array  should return empty array of products', async () => {
+        productDaoMock.getProductsFilterByDescription.mockReturnValueOnce([]);
+        const filter = {
+            description: 'test'
+        } as QueryFilterRequest;
+        const response = await productService.getProductsFilterByDescription(filter);
+        expect(response.products.length).toBe(0);
+    });
+
+    test('if product.dao.getAllProducts return empty array should return empty array of products', async () => {
+        productDaoMock.getProductsFilterByNameOrDescription.mockReturnValueOnce([]);
+        const filter = {
+            description: 'test',
+            name: 'test'
+        } as QueryFilterRequest;
+        const response = await productService.getProductsFilterByNameOrDescription(filter);
+        expect(response.products.length).toBe(0);
+    });
 });

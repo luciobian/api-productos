@@ -11,9 +11,6 @@ export default class TaxDao {
   ) {}
 
   async getTaxById(idTax: number): Promise<Tax> {
-    return await this._taxRepository
-      .createQueryBuilder('t')
-      .where('t.id = :id', { id: idTax })
-      .getOne();
+    return await this._taxRepository.createQueryBuilder('t').where('t.id = :id', { id: idTax }).getOne();
   }
 }

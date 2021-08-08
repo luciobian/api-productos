@@ -3,6 +3,7 @@ import { NotFoundException } from '@nestjs/common';
 import { Tax } from '../../../src/models/entities/tax.entity';
 import HelperFormat from '../../../dist/src/helpers/format.helper';
 import { Product } from '../../../src/models/entities/product.entity';
+import { QueryFilterRequest } from '../../../src/models/requests/product-controller/query-filter.request';
 
 describe('product test suite', () => {
     let productHandler: ProductHandler;
@@ -10,7 +11,29 @@ describe('product test suite', () => {
         getTaxById: jest.fn()
     };
     const productServiceMock = {
-        createProduct: jest.fn()
+        createProduct: jest.fn(),
+        getProductsFilterByName: jest.fn(),
+        getProductsFilterByDescription: jest.fn(),
+        getProductsFilterByNameOrDescription: jest.fn(),
+        getAllProducts: jest.fn()
+    };
+    const getResponseTest = {
+        "products": [
+            {
+                "name": "test",
+                "description": "test producto",
+                "price": "0.00",
+                "totalPrice": "0.00"
+            },
+            {
+                "name": "test",
+                "description": "test producto",
+                "price": "0.00",
+                "totalPrice": "0.00"
+            }
+        ],
+        "page": 1,
+        "total": 2
     };
     beforeEach(() => {
         productHandler = new ProductHandler(
@@ -65,5 +88,72 @@ describe('product test suite', () => {
         taxServiceMock.getTaxById.mockReturnValueOnce(taxEntityMock);
         let response = await productHandler.createProduct(request);
         expect(response).not.toBeNaN();
+    });
+
+    test('product handler GET user filter by name should return especific structure', async () => {
+        const queryParams = {
+            name: 'test'
+        } as QueryFilterRequest;
+
+        productServiceMock.getProductsFilterByName.mockReturnValueOnce(getResponseTest);
+        let response = await productHandler.getProducts(queryParams);
+
+        expect(response.page).toBe(1);
+        expect(response).toHaveProperty('total');
+        expect(response).toHaveProperty('page');
+        expect(response).toHaveProperty('products');
+
+    });
+
+    test('product handler GET user filter by description should return especific structure', async () => {
+        const queryParams = {
+            description: 'test'
+        } as QueryFilterRequest;
+
+        productServiceMock.getProductsFilterByDescription.mockReturnValueOnce(getResponseTest);
+        let response = await productHandler.getProducts(queryParams);
+
+        expect(response.page).toBe(1);
+        expect(response).toHaveProperty('total');
+        expect(response).toHaveProperty('page');
+        expect(response).toHaveProperty('products');
+
+    });
+
+    test('product handler GET user filter by name & description should return especific structure', async () => {
+        const queryParams = {
+            description: 'test',
+            name: 'test'
+        } as QueryFilterRequest;
+
+        productServiceMock.getProductsFilterByNameOrDescription.mockReturnValueOnce(getResponseTest);
+        let response = await productHandler.getProducts(queryParams);
+
+        expect(response.page).toBe(1);
+        expect(response).toHaveProperty('total');
+        expect(response).toHaveProperty('page');
+        expect(response).toHaveProperty('products');
+
+    });
+
+    test('product handler GET user should return especific structure', async () => {
+        const queryParams = {} as QueryFilterRequest;
+
+        productServiceMock.getAllProducts.mockReturnValueOnce(getResponseTest);
+        let response = await productHandler.getProducts(queryParams);
+
+        expect(response.page).toBe(1);
+        expect(response).toHaveProperty('total');
+        expect(response).toHaveProperty('page');
+        expect(response).toHaveProperty('products');
+    });
+
+    test('product handler GET total in response shold be equal to the lenght of products', async () => {
+        const queryParams = {} as QueryFilterRequest;
+
+        productServiceMock.getAllProducts.mockReturnValueOnce(getResponseTest);
+        let response = await productHandler.getProducts(queryParams);
+
+        expect(response.products.length).toEqual(response.total);
     });
 })

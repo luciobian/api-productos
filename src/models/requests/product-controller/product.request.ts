@@ -1,10 +1,4 @@
-import {
-  IsString,
-  IsDefined,
-  IsOptional,
-  IsNumber,
-  IsPositive
-} from 'class-validator';
+import { IsString, IsDefined, IsOptional, IsNumber, IsPositive } from 'class-validator';
 import EnumErrorMessage from '../../../enums/error-messages.enum';
 
 export default class ProductRequest {
