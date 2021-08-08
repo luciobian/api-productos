@@ -4,12 +4,14 @@ import ProductDao from '../daos/product.dao';
 import { QueryFilterRequest } from 'src/models/requests/product-controller/query-filter.request';
 import { ProductResponse } from '../models/responses/product-controller/product.response';
 import HelperConverter from '../helpers/converter.helper';
+import ProductRequest from '../models/requests/product-controller/product.request';
 
 @Injectable()
 export default class ProductService {
   constructor(private _productDao: ProductDao) {}
 
-  async createProduct(product: Product): Promise<number> {
+  async createProduct(productRequest: ProductRequest, taxValue: number): Promise<number> {
+    const product = HelperConverter.productRequestToEntity(productRequest, taxValue);
     const response = await this._productDao.createProduct(product);
     return response.id;
   }

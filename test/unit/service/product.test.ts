@@ -1,6 +1,6 @@
-import ProductService from '../../../dist/src/services/product.service';
-import { Product } from '../../../src/models/entities/product.entity';
+import ProductService from '../../../src/services/product.service';
 import { QueryFilterRequest } from '../../../src/models/requests/product-controller/query-filter.request';
+import ProductRequest from '../../../src/models/requests/product-controller/product.request';
 describe('product service suite', () => {
     const productDaoMock = {
         createProduct: jest.fn(),
@@ -33,12 +33,12 @@ describe('product service suite', () => {
             createdAt: '2021-08-06T00:21:56.841Z'
         });
         const product = {
-            name: "Test",
-            price: 200,
-            totalPrice: 202,
-            taxId: 3
-        } as Product;
-        const response = await productService.createProduct(product);
+            "name": "test",
+            "price": 7000.66,
+            "taxId": 1,
+            "description": "test producto"
+        } as ProductRequest;
+        const response = await productService.createProduct(product, 21);
         expect(response).not.toBeNaN();
         expect(response).toBe(1);
     })
