@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import ProductRequest from '../models/requests/product-controller/product.request';
 import TaxService from '../services/tax.service';
 import ProductService from '../services/product.service';
-import HelperConverter from '../helpers/converter.helper';
 import { Tax } from '../models/entities/tax.entity';
 import { QueryFilterRequest } from '../models/requests/product-controller/query-filter.request';
 import { ProductResponse } from '../models/responses/product-controller/product.response';
@@ -17,9 +16,7 @@ export default class ProductHandler {
         throw new NotFoundException(`El tipo de impuesto ${productRequest.taxId} no existe.`);
       }
 
-      const product = HelperConverter.productRequestToEntity(productRequest, tax.value);
-
-      const response = await this._productService.createProduct(product);
+      const response = await this._productService.createProduct(productRequest, tax.value);
 
       return response;
     } catch (error) {
