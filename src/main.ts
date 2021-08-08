@@ -8,11 +8,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api/v1.0');
 
-  const options = new DocumentBuilder()
-    .setTitle('Documentation')
-    .setVersion('0.1')
-    .addTag('tag')
-    .build();
+  const options = new DocumentBuilder().setTitle('Documentation').setVersion('0.1').addTag('tag').build();
 
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);

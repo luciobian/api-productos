@@ -25,10 +25,7 @@ import TaxService from './services/tax.service';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => {
-        return Object.assign(
-          await getConnectionOptions(),
-          config.get('DATABASE')
-        );
+        return Object.assign(await getConnectionOptions(), config.get('DATABASE'));
       }
     }),
     ProductModule

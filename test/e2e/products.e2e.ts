@@ -68,7 +68,7 @@ describe('Product integration test suite', () => {
 
     });
 
-    test('POST /product with not existence tax should return 404 and not create product', async () => {//TODO: ver si eesta bien escrito
+    test('POST /product with not existence tax should return 404 and not create product', async () => {
         const requestProduct = {
             "name": "test",
             "price": 100,
@@ -83,7 +83,7 @@ describe('Product integration test suite', () => {
             .expect('{"statusCode":404,"message":"El tipo de impuesto 1 no existe.","error":"Not Found"}');
 
         let response = await productRepository.find();
-        
+
         expect(response).toStrictEqual([]);
     });
 });
