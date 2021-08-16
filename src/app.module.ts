@@ -10,9 +10,17 @@ import { nestEnvConfiguration } from './config/load.env.config';
 import { ProductModule } from './modules/product/product.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './middlewares/logger.middleware';
+import { UserModule } from './modules/user/user.module';
+import { UserController } from './controllers/user.controller';
 import TaxDao from './daos/tax.dao';
 import ProductDao from './daos/product.dao';
 import TaxService from './services/tax.service';
+import UserHandler from '../src/handlers/user.handler';
+import UserService from '../src/services/user.service';
+import UserDao from '../src/daos/user.dao';
+import AuthAdminService from './services/auth.service';
+import { AuthAdminGuard } from './helpers/guards/authorization.guard';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -28,16 +36,23 @@ import TaxService from './services/tax.service';
         return Object.assign(await getConnectionOptions(), config.get('DATABASE'));
       }
     }),
-    ProductModule
+    ProductModule,
+    UserModule,
+    AuthModule
   ],
-  controllers: [ProductController],
+  controllers: [ProductController, UserController],
   providers: [
     { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
     ProductHandler,
     ProductService,
     ProductDao,
     TaxDao,
-    TaxService
+    TaxService,
+    UserHandler,
+    UserService,
+    UserDao,
+    AuthAdminGuard, 
+    AuthAdminService
   ]
 })
 export default class AppModule {}

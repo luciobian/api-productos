@@ -1,7 +1,7 @@
 import ProductHandler from '../../../src/handlers/product.handler';
 import { NotFoundException } from '@nestjs/common';
 import { Tax } from '../../../src/models/entities/tax.entity';
-import HelperFormat from '../../../dist/src/helpers/format.helper';
+import HelperFormat from '../../../src/helpers/format.helper';
 import { Product } from '../../../src/models/entities/product.entity';
 import { QueryFilterRequest } from '../../../src/models/requests/product-controller/query-filter.request';
 
