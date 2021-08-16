@@ -18,7 +18,7 @@ export default class ProductDao {
 
   async getProductsFilterByNameOrDescription(filter: QueryFilterRequest): Promise<Product[]> {
     return await this._productRepository.find({
-      where: { name: Like(`%${filter.name}%`), description: Like(`%${filter.description}%`) },
+      where: { name: Like(`%${filter.name}%`), description: Like(`%${filter.description}%`), enabled: true },
       order: { updatedAt: Constant.DESC },
       take: Constant.PER_PAGE,
       skip: (filter.page - 1) * Constant.PER_PAGE
@@ -27,7 +27,7 @@ export default class ProductDao {
 
   async getProductsFilterByDescription(filter: QueryFilterRequest): Promise<Product[]> {
     return await this._productRepository.find({
-      where: { description: Like(`%${filter.description}%`) },
+      where: { description: Like(`%${filter.description}%`), enabled: true },
       order: { updatedAt: Constant.DESC },
       take: Constant.PER_PAGE,
       skip: (filter.page - 1) * Constant.PER_PAGE
@@ -36,7 +36,7 @@ export default class ProductDao {
 
   async getProductsFilterByName(filter: QueryFilterRequest): Promise<Product[]> {
     return await this._productRepository.find({
-      where: { name: Like(`%${filter.name}%`) },
+      where: { name: Like(`%${filter.name}%`), enabled: true },
       order: { updatedAt: Constant.DESC },
       take: Constant.PER_PAGE,
       skip: (filter.page - 1) * Constant.PER_PAGE

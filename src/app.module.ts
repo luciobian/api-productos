@@ -51,7 +51,7 @@ import { AuthModule } from './modules/auth/auth.module';
     UserHandler,
     UserService,
     UserDao,
-    AuthAdminGuard, 
+    AuthAdminGuard,
     AuthAdminService
   ]
 })

@@ -18,6 +18,19 @@ describe('Product integration test suite', () => {
     let userRepository: Repository<User>;
     let roleRepository: Repository<Role>;
 
+    const requestProduct = {
+        "name": "test",
+        "price": 100,
+        "taxId": 1,
+        "description": "test producto"
+    };
+
+    const tax = {
+        id: 1,
+        name: "IVA 21%",
+        value: 21
+    };
+
 
     beforeEach(async () => {
         const moduleRef: TestingModule = await Test.createTestingModule({
@@ -67,18 +80,7 @@ describe('Product integration test suite', () => {
     });
 
     test('POST /products with valid request should register in database', async () => {
-        await taxRepository.insert({
-            id: 1,
-            name: "IVA 21%",
-            value: 21
-        });
-
-        const requestProduct = {
-            "name": "test",
-            "price": 100,
-            "taxId": 1,
-            "description": "test producto"
-        };
+        await taxRepository.insert(tax);
 
         await request(app.getHttpServer()).post('/products')
             .set('Authorization', 'Bearer OgBLkXaiWXZEkwh5tyQfQZt+W4jp4qpuD5e7RYyGSmQ=')
@@ -96,20 +98,13 @@ describe('Product integration test suite', () => {
     });
 
     test('POST /product with not existence tax should return 404 and not create product', async () => {
-        const requestProduct = {
-            "name": "test",
-            "price": 100,
-            "taxId": 1,
-            "description": "test producto"
-        };
-
         await request(app.getHttpServer())
             .post('/products')
             .set('Authorization', 'Bearer OgBLkXaiWXZEkwh5tyQfQZt+W4jp4qpuD5e7RYyGSmQ=')
             .send(requestProduct)
             .expect(EnumHttpStatusCode.NOT_FOUND)
             .expect('{"statusCode":404,"message":"El tipo de impuesto 1 no existe.","error":"Not Found"}');
-            
+
         let response = await productRepository.find();
         expect(response).toStrictEqual([]);
     });

@@ -7,9 +7,9 @@ export class AuthAdminGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const existAuthorization = Boolean(request.headers['authorization']);
-    if(existAuthorization){
+    if (existAuthorization) {
       return await this._authService.validateAdminToken(request.headers['authorization']);
     }
-    throw new UnauthorizedException()
+    throw new UnauthorizedException();
   }
 }

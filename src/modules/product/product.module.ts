@@ -16,7 +16,16 @@ import { User } from '../../../src/models/entities/user.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Product, Tax, User]), AuthModule],
-  providers: [ProductDao, ProductHandler, TaxDao, ProductService, TaxService, AuthAdminGuard, AuthAdminService, UserDao],
+  providers: [
+    ProductDao,
+    ProductHandler,
+    TaxDao,
+    ProductService,
+    TaxService,
+    AuthAdminGuard,
+    AuthAdminService,
+    UserDao
+  ],
   controllers: [ProductController],
   exports: [TypeOrmModule]
 })
