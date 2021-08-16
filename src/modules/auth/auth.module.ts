@@ -5,8 +5,8 @@ import { UserModule } from '../user/user.module';
 import UserDao from '../../../src/daos/user.dao';
 
 @Module({
-    imports: [UserModule],
-    providers: [AuthAdminService, AuthAdminGuard, UserDao],
-    exports: [AuthAdminGuard]
-  })
+  imports: [UserModule],
+  providers: [AuthAdminService, AuthAdminGuard, UserDao],
+  exports: [AuthAdminGuard]
+})
 export class AuthModule {}

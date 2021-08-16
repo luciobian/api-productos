@@ -76,4 +76,29 @@ describe('product service suite', () => {
         const response = await productService.getProductsFilterByNameOrDescription(filter);
         expect(response.products.length).toBe(0);
     });
+
+
+
+    test('if product disabled product should not be displayed', async () => {
+        productDaoMock.getProductsFilterByNameOrDescription.mockReturnValueOnce({
+            name: 'test',
+            price: 7000.66,
+            totalPrice: 8470.7986,
+            description: 'test producto',
+            taxId: 1,
+            updatedAt: '2021-08-06T00:21:56.841Z',
+            deletedAt: null,
+            id: 1,
+            enabled: true,
+            createdAt: '2021-08-06T00:21:56.841Z'
+        });
+
+        const filter = {
+            description: 'test',
+            name: 'test'
+        } as QueryFilterRequest;
+
+        const response = await productService.getProductsFilterByNameOrDescription(filter);
+        expect(response.products).toStrictEqual([]);
+    });
 });
