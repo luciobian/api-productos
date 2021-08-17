@@ -1,8 +1,8 @@
 try {
     const Dotenv = require('dotenv');
     const path = require('path');
-    const NestEnvConfiguration = require('./src/Config/NestEnvConfiguration');
-    const EnvConfiguration = require("./src/Config/EnvFilePathConfiguration");
+    const NestEnvConfiguration = require('./src/config/load.env.config');
+    const EnvConfiguration = require("./src/config/env.config");
     
     let envData = Dotenv.config({ path: `${path.join(process.env.PWD)}/${EnvConfiguration.envFilePathConfiguration()}` }).parsed
     let envs = NestEnvConfiguration.envModelTransformer(envData);
