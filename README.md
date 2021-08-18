@@ -6,6 +6,9 @@
 * Correr `./init.sh`.
 * Ejecutar `docker-compose exec api-prod-user npm run typeorm migration:run`
 
+### Test
+* `npm run test`
+
 ## Estructura del proyecto (src)
 ``` Source files
 ├── src                    # Source files.
